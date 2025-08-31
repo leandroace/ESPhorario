@@ -16,7 +16,7 @@ function SalonForm({ onSalonCreado }) {
 
   const handleSubmit = e => {
     e.preventDefault();
-    axios.post('http://localhost:3001/api/salones', form)
+    axios.post(`${import.meta.env.VITE_API_BASE_URL}/salones`, form)
       .then(() => {
         alert('Salón añadido');
         setForm({ nombre: '', capacidad: '', multimedia: '', novedades: '' });

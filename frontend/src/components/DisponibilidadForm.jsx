@@ -123,7 +123,7 @@ function DisponibilidadForm() {
 
     setLoading(true);
     try {
-      const res = await axios.post('http://localhost:3001/api/disponibilidad', {
+      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/disponibilidad`, {
         ...form,
         cupo: Number(form.cupo),
       });

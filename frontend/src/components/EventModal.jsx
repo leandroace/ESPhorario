@@ -156,6 +156,7 @@ function EventModal({ closeModal, salones, usuario, onCreateSuccess }) {
               <option value="no">No se repite</option>
               <option value="diaria">Cada día</option>
               <option value="semanal">Cada semana</option>
+               <option value="cada_2_semanas">Cada 2 semanas </option>
             </select>
           </div>
 

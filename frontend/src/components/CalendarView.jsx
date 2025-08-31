@@ -89,7 +89,7 @@ function CalendarView({ salon, usuario }) {
 
   // =========== 👇 CAMBIO: mapear repetidos a rrule + duration ==============
   const cargarEventos = async () => {
-    const res = await axios.get(`http://localhost:3001/api/salones/${salon.id}/eventos`);
+    const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/salones/${salon.id}/eventos`);
 
     const eventosFormateados = res.data.map((ev) => {
       const startLocal = toISOLocal(ev.fecha_inicio);
@@ -115,6 +115,21 @@ function CalendarView({ salon, usuario }) {
             dtstart: startLocal
             // until: '2025-12-01T23:59:00', // opcional
             // byweekday: ['th'], // opcional
+          },
+          duration,
+          color: ev.color || '#3b82f6',
+          extendedProps: baseProps
+        };
+      }
+
+      if (ev.repeticion === 'cada_2_semanas') {
+        return {
+          id: ev.id,
+          title: ev.titulo,
+          rrule: {
+            freq: 'weekly',
+            interval: 2,       // 👈 cada 2 semanas (14 días), mismo día de la semana
+            dtstart: startLocal
           },
           duration,
           color: ev.color || '#3b82f6',
@@ -184,7 +199,7 @@ function CalendarView({ salon, usuario }) {
 
   const handleEliminar = async () => {
     if (!eventoSeleccionado) return;
-    await axios.delete(`http://localhost:3001/api/eventos/${eventoSeleccionado.id}`, {
+    await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/eventos/${eventoSeleccionado.id}`, {
       params: { rol: usuario.rol }
     });
     setModalOpen(false);
@@ -193,10 +208,11 @@ function CalendarView({ salon, usuario }) {
 
   const handleGuardar = async (e) => {
     e.preventDefault();
-    // Nota: esto edita la "regla" si es recurrente (todas las ocurrencias)
-    await axios.put(`http://localhost:3001/api/eventos/${eventoSeleccionado.id}`, {
+    await axios.put(`${import.meta.env.VITE_API_BASE_URL}/eventos/${eventoSeleccionado.id}`, {
       ...eventoSeleccionado,
-      rol: usuario.rol
+      rol: usuario.rol,
+      fecha_inicio: new Date(eventoSeleccionado.fecha_inicio).toISOString(),
+      fecha_fin: new Date(eventoSeleccionado.fecha_fin).toISOString(),
     });
     setModalOpen(false);
     cargarEventos();
@@ -333,6 +349,7 @@ function CalendarView({ salon, usuario }) {
                     <option value="no">No se repite</option>
                     <option value="diaria">Cada día</option>
                     <option value="semanal">Cada semana</option>
+                    <option value="cada_2_semanas">Cada 2 semanas</option>
                   </select>
                   <span style={modalUI.hint}>Si el evento ya tiene ocurrencias, estás editando la regla completa.</span>
                 </div>

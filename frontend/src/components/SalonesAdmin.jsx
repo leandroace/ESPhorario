@@ -20,7 +20,7 @@ function SalonesAdmin({ usuario }) {
     const cargarSalones = async () => {
         setCargando(true);
         try {
-            const res = await axios.get('http://localhost:3001/api/salones');
+            const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/salones`);
             setSalones(res.data);
         } catch (e) {
             setMensaje('No se pudieron cargar los salones');
@@ -41,7 +41,7 @@ function SalonesAdmin({ usuario }) {
 
     const guardarCambios = async (salon) => {
         try {
-            await axios.put(`http://localhost:3001/api/salones/${salon.id}`, {
+            await axios.put(`${import.meta.env.VITE_API_BASE_URL}/salones/${salon.id}`, {
                 id: salon.id,
                 nombre: salon.nombre,
                 capacidad: Number(salon.capacidad),
@@ -59,7 +59,7 @@ function SalonesAdmin({ usuario }) {
     const eliminarSalon = async (id) => {
         if (!window.confirm('¿Estás seguro de eliminar este salón?')) return;
         try {
-            await axios.delete(`http://localhost:3001/api/salones/${id}?rol=${usuario?.rol}`);
+            await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/salones/${id}?rol=${usuario?.rol}`);
             setMensaje('Salón eliminado');
             cargarSalones();
         } catch (err) {
@@ -73,7 +73,7 @@ function SalonesAdmin({ usuario }) {
             return;
         }
         try {
-            await axios.post('http://localhost:3001/api/salones', {
+            await axios.post(`${import.meta.env.VITE_API_BASE_URL}/salones`, {
                 ...nuevoSalon,
                 capacidad: Number(nuevoSalon.capacidad),
                 rol: usuario?.rol
