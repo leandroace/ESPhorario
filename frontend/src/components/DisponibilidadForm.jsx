@@ -123,10 +123,15 @@ function DisponibilidadForm() {
 
     setLoading(true);
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/disponibilidad`, {
-        ...form,
-        cupo: Number(form.cupo),
-      });
+      const iniISO = new Date(form.fecha_inicio).toISOString();
+      const finISO = new Date(form.fecha_fin).toISOString();
+
+      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/disponibilidad`, 
+        {...form, cupo: Number(form.cupo),
+      }
+    `${import.meta.env.VITE_API_BASE_URL}/disponibilidad`,
+    { fecha_inicio: iniISO, fecha_fin: finISO, cupo: Number(form.cupo) }
+    );
 
       if (Array.isArray(res.data) && res.data.length > 0) {
         setResultado(res.data);
