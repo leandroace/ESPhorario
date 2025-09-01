@@ -1,7 +1,7 @@
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 
 const pad2 = (n) => String(n).padStart(2, '0');
-const plantillaURL = new URL("formats/aula.pdf", import.meta.env.VITE_API_BASE_URL).href;
+const plantillaURL = new URL('formats/aula.pdf', import.meta.env.BASE_URL).href;
 
 export async function generarFormatoSolicitud(
   evento,
