@@ -1,10 +1,11 @@
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 
 const pad2 = (n) => String(n).padStart(2, '0');
+const plantillaURL = new URL("formats/aula.pdf", import.meta.env.BASE_URL).href;
 
 export async function generarFormatoSolicitud(
   evento,
-  plantillaUrl = '../../public/formats/aula.pdf'
+  
 ) {
   const bytes = await fetch(plantillaUrl).then(r => r.arrayBuffer());
   const pdf = await PDFDocument.load(bytes);
