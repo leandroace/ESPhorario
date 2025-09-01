@@ -7,7 +7,7 @@ export async function generarFormatoSolicitud(
   evento,
   
 ) {
-  const bytes = await fetch(plantillaUrl).then(r => r.arrayBuffer());
+  const bytes = await fetch(plantillaURL).then(r => r.arrayBuffer());
   const pdf = await PDFDocument.load(bytes);
   const page = pdf.getPages()[0];
   const { width, height } = page.getSize();
