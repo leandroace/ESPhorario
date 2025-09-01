@@ -21,10 +21,15 @@ app.use(express.json());
 // ===== Rutas API
 app.use('/api', apiRoutes);
 
+// ===== Ruta de salud (Render la usará para health checks)
+app.get('/healthz', (req, res) => {
+  res.set('Cache-Control', 'no-store');
+  res.status(200).send('ok');
+});
+
 // ===== Inicialización DB (solo esquema, sin seed)
 async function initDb() {
   try {
-    // Usa un archivo de esquema para Postgres. Te dejo uno de ejemplo abajo como schema.pg.sql
     const schemaPath = path.join(__dirname, 'db', 'schema.pg.sql');
     const sql = await fs.readFile(schemaPath, 'utf-8');
     await db.exec(sql);
