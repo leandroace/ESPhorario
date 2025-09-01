@@ -126,9 +126,7 @@ function DisponibilidadForm() {
       const iniISO = new Date(form.fecha_inicio).toISOString();
       const finISO = new Date(form.fecha_fin).toISOString();
 
-      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/disponibilidad`, 
-        {...form, cupo: Number(form.cupo),
-      }
+      const res = await axios.post(
     `${import.meta.env.VITE_API_BASE_URL}/disponibilidad`,
     { fecha_inicio: iniISO, fecha_fin: finISO, cupo: Number(form.cupo) }
     );
