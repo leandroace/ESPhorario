@@ -85,7 +85,7 @@ function EventModal({ closeModal, salones, usuario, onCreateSuccess }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:3001/api/eventos', {
+      await axios.post('${import.meta.env.VITE_API_BASE_URL}/eventos', {
         rol: usuario.rol,
         id_salon: idSalon,
         titulo,

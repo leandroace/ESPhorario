@@ -13,7 +13,7 @@ function LoginForm({ onLogin }) {
     setError('');
     setLoading(true);
     try {
-      const res = await axios.post('http://localhost:3001/api/login', { correo, contraseña });
+      const res = await axios.post('${import.meta.env.VITE_API_BASE_URL}/login', { correo, contraseña });
       const usuario = res.data.usuario;
       localStorage.setItem('usuario', JSON.stringify(usuario));
       onLogin(usuario);

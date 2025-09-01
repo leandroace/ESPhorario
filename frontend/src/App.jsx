@@ -20,7 +20,7 @@ function App() {
   });
 
   useEffect(() => {
-    axios.get('http://localhost:3001/api/salones').then(res => setSalones(res.data));
+    axios.get('${import.meta.env.VITE_API_BASE_URL}/salones').then(res => setSalones(res.data));
   }, []);
 
   const logout = () => {
